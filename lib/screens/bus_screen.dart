@@ -6,7 +6,7 @@ import 'package:portfolio1/providers/company.dart';
 import 'package:portfolio1/providers/location_work.dart';
 import 'package:portfolio1/widgets/bus_tiles.dart';
 import 'package:provider/provider.dart';
-
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 class BusScreen extends StatefulWidget {
   static const routeName = '/bus-screen';
 
@@ -19,18 +19,24 @@ class BusScreen extends StatefulWidget {
 }
 
 class _BusScreenState extends State<BusScreen> {
+  int count=  0;
   String locality;
   Map<String, String> names;
   List<Bus> busList;
+  String compName;
+  String id;
   //Map<String, String> subLocalities = {};
+
 
   Future<void> _refreshLoc() async {
     await Provider.of<Companies>(context).getdata();
+    busList = Provider.of<Companies>(context).getCompanyBusListById(id).buses;
     await Provider.of<LocationWorks>(context).calcName(busList);
     setState(() {
       names = Provider.of<LocationWorks>(context).name;
     });
   }
+
 
   Future<String> getLocality(lat,lng) async{
     await Geolocator().placemarkFromPosition(Position(latitude: lat,longitude: lng)).then((val){
@@ -39,22 +45,39 @@ class _BusScreenState extends State<BusScreen> {
   }
 
   @override
+  void initState() {
+    count++;
+    print('rebuilt $count');
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     var proData = Provider.of<LocationWorks>(context);
+    var compData = Provider.of<Companies>(context);
     final comp =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-     busList = comp['compBuses']; //BUSlIST COMING FROM PREV SCREEN. SO WHEN DATA CHANGES, NEED TO GO BACK TO BRING BACK UPDATED BUSLIST.
-    proData.calcName(busList);
+    id = comp['id'];
+    compName = comp['compName'];
+    busList = compData.getCompanyBusListById(id).buses;
+    proData.calcName(busList).then((val){
+      setState(() {
+        names = proData.name;
+      });
+    });
     //proData.calcSubLoc(busList);
-    names = proData.name;
     //subLocalities = proData.subLocality;
     return Scaffold(
-      body: RefreshIndicator(
+      body: LiquidPullToRefresh(
+        springAnimationDurationInMilliseconds: 600,
+        showChildOpacityTransition: false,
+        height: 80,
+        color: Colors.amber,
+        backgroundColor: Colors.white,
         onRefresh: ()=>_refreshLoc(),
         child: ListView.builder(
           itemBuilder: (_, i) => Card(
             elevation: 5,
-            margin: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+            margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
             child: BusTiles(
               busPlate: busList.elementAt(i).busPlate,
               lat: busList.elementAt(i).lat,

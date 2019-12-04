@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio1/screens/emergency_contacts.dart';
+import 'package:portfolio1/screens/emergency_contacts_screen.dart';
+import 'package:portfolio1/screens/qr_demo.dart';
 import 'package:portfolio1/widgets/about_widget.dart';
 
 class AppDrawer extends StatelessWidget {
-
-  void _startAddNewTransaction(BuildContext ctx) {
+  void modalBottomSheet(BuildContext ctx) {
     showModalBottomSheet(
       elevation: 6,
       context: ctx,
       builder: (bCtx) {
         return GestureDetector(
           onTap: () {},
-          child:  AboutWidget() ,
+          child: AboutWidget(),
         );
       },
     );
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -30,13 +33,16 @@ class AppDrawer extends StatelessWidget {
             'assets/images/wal.jpg',
             fit: BoxFit.cover,
           ),
-          SizedBox(height: 2,),
+          SizedBox(
+            height: 2,
+          ),
           Card(
             elevation: 1,
             margin: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
             child: ListTile(
               onTap: () {
-                Navigator.of(context).pushNamed(EmergencyContacts.routeName);
+                Navigator.of(context)
+                    .pushNamed(EmergencyContactsScreen.routeName);
               },
               leading: Icon(Icons.contact_phone),
               title: Text('Emergency Contacts'),
@@ -46,7 +52,10 @@ class AppDrawer extends StatelessWidget {
             elevation: 1,
             margin: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                  Navigator.of(context).pushNamed(QrDemo.routeName);
+              },
               leading: Icon(Icons.scanner),
               title: Text('QR Scanner'),
             ),
@@ -56,7 +65,7 @@ class AppDrawer extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
             child: ListTile(
               onTap: () {
-                _startAddNewTransaction(context);
+                modalBottomSheet(context);
               },
               leading: Icon(Icons.info),
               title: Text('About'),

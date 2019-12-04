@@ -9,43 +9,35 @@ class BusTiles extends StatelessWidget {
   double lng;
   String name;
   String subLocality;
+
   //String locality;
 
-  BusTiles(
-      {this.busPlate,
-      this.lat,
-      this.lng,
-      this.name});
-      //this.locality,
-      //this.subLocality});
+  BusTiles({this.busPlate, this.lat, this.lng, this.name});
 
+  //this.locality,
+  //this.subLocality});
 
   @override
   Widget build(BuildContext context) {
     print(name);
     return ListTile(
-      subtitle: Text(name,
+      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+      subtitle: Text(
+        name,
         style: TextStyle(
           fontSize: 11,
         ),
       ),
-      trailing: Container(
-        width: 120,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            FittedBox(child: Text('On Map')),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(MapScreen.routeName,
-                    arguments: {'lat': lat, 'lng': lng, 'busplate': busPlate});
-              },
-              tooltip: 'Click to open in map',
-              icon: Icon(Icons.location_on,color: Colors.deepOrangeAccent,),
-            ),
-          ],
-        ),
-      ),
+      trailing: FlatButton(
+          child: Text(
+            'on Map',
+            style: TextStyle(color: Colors.deepPurple),
+          ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(MapScreen.routeName,
+                arguments: {'lat': lat, 'lng': lng, 'busplate': busPlate});
+          },
+          padding: EdgeInsets.all(0)),
       title: Text(busPlate),
       leading: CircleAvatar(
         child: Icon(Icons.directions_bus),

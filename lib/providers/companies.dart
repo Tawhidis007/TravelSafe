@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -61,12 +59,17 @@ class Companies with ChangeNotifier {
 
   Future<void> distanceMatrix() async {
     try {
-      const url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=23.875856,90.379540&destinations=23.868234299999997,90.3993598&key=AIzaSyASeEC_l4CyE4xSAoZ0-VUDjOEITGs4eOQ";
+      const url =
+          "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=23.875856,90.379540&destinations=23.868234299999997,90.3993598&key=AIzaSyASeEC_l4CyE4xSAoZ0-VUDjOEITGs4eOQ";
       final response = await http.get(url);
       print(json.decode(response.body));
     } catch (error) {
       print(error);
       throw error;
     }
+  }
+
+  Company getCompanyBusListById(String id) {
+    return companyData.firstWhere((cId) => cId.id == id);
   }
 }
