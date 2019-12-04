@@ -100,7 +100,7 @@ class _InfoDialogState extends State<InfoDialog> {
                   child: Card(
                     elevation: 8,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Stack(
                           children: <Widget>[
