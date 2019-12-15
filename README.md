@@ -1,16 +1,9 @@
-# portfolio1
+About this project :
+TravelSafe was built on Flutter, which needs no new introduction and with Firebase on the backend. It is to be noted that, iOS optimization is further required on this project.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The features : 
+a.User can select a service from a number of bus services registered to the app. 
+b. Available buses around him will be shown by the app, with information about the duration(!) to arrive and the geographical location of that bus.
+c. User can click to see that on the Map, which supports two different kinds of views. 
+d. User can set emergency contacts in the app, which when pressed, will send the user's current location to them as a text sms.
+e. Considering in this model, theres a unique QR code given to every bus/company,as it is a Travel Safe Model proposed; the user can scan the QR code and get instant information about the bus and the driver driving that particular bus,all in real time. 
